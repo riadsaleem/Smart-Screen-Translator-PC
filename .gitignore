@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.log
+
+# PyInstaller builds and heavy binary packages
+build/
+dist/
+*.spec
+app_payload.zip
+Setup_SmartScreenTranslator.exe
+
+# Offline Translation Models local cache & packages
+.argosmodel/
+*.argosmodel
+packages/
+
+# Temporary test captures
+test_lens.png
+capture_*.png
+*.tmp

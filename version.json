@@ -1,0 +1,20 @@
+{
+  "version": "2.0.0",
+  "version_code": 200,
+  "release_date": "2026-11-14",
+  "update_type": "patch",
+  "min_full_version_required": "2.0.0",
+  "title": "الإصدار 2.0.0 - المستقر",
+  "changelog": [
+    "إتاحة اختيار وتغيير مسار التثبيت بحرية تامة من خلال نافذة استعراض المجلدات.",
+    "تحديد المسار الافتراضي المعتمد: C:\\Program Files\\SmartScreenTranslator مع صلاحيات المسؤول (UAC).",
+    "تحسين تسجيل اختصارات الكيبورد بدقة متناهية وإضافة زر اعتماد الاختصار فورياً.",
+    "نظام تحديثات سحابي ذكي ومباشر عبر GitHub مع ميزة التحديثات الفرعية الخفيفة (Delta Updates)."
+  ],
+  "download": {
+    "patch_url": "",
+    "patch_size_mb": 0.5,
+    "full_installer_url": "https://github.com/riadsaleem/Smart-Screen-Translator-PC/releases/download/v2.0.0/Setup_SmartScreenTranslator.exe",
+    "full_installer_size_mb": 221.8
+  }
+}

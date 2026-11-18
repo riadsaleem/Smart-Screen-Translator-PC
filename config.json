@@ -1,0 +1,13 @@
+{
+    "hotkey": "ctrl+t",
+    "target_language": "ar",
+    "source_language": "auto",
+    "auto_copy_translation": true,
+    "show_overlay_image": true,
+    "play_sound": true,
+    "show_launcher_on_startup": true,
+    "auto_start": true,
+    "translation_mode": "auto",
+    "theme": "dark",
+    "overlay_theme": "light"
+}
