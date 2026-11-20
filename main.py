@@ -126,7 +126,7 @@ class SmartScreenTranslatorApp:
 
         # When launched via Windows startup (--startup), stay silently in the system tray to keep boot lightweight
         is_startup_launch = is_silent_launch()
-        if not is_startup_launch and self.config.get("show_settings_on_startup", self.config.get("show_launcher_on_startup", True)):
+        if not is_startup_launch and self.config.get("show_settings_on_startup", self.config.get("show_launcher_on_startup", False)):
             self.root.after(350, lambda: self.open_settings("general"))
 
         # Trim initial working set once startup settles so background RAM stays minimal

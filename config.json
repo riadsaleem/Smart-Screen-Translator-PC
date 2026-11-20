@@ -5,7 +5,7 @@
     "auto_copy_translation": true,
     "show_overlay_image": true,
     "play_sound": true,
-    "show_launcher_on_startup": true,
+    "show_launcher_on_startup": false,
     "auto_start": true,
     "translation_mode": "auto",
     "theme": "dark",

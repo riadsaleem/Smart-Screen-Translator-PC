@@ -699,16 +699,16 @@ class InstallerGUI:
 
         if self.launch_var.get() and os.path.exists(target_exe):
             try:
-                os.startfile(target_exe)
+                run_hidden_popen([target_exe, "--startup"], cwd=os.path.dirname(target_exe))
             except Exception:
-                run_hidden_popen([target_exe], cwd=os.path.dirname(target_exe))
+                pass
 
         messagebox.showinfo(
             "اكتمل التثبيت بنجاح",
             f"تم تثبيت '{DISPLAY_NAME}' بنجاح على جهازك!\n\n"
             f"• مسار التثبيت: {self.path_entry.get().strip()}\n"
             f"• تم إنشاء اختصار سطح المكتب بالأيقونة الجديدة.\n"
-            f"• سيتم الآن تشغيل المترجم وعرض شاشة البداية.\n"
+            f"• يعمل المترجم الآن بالصامت في أيقونة النظام الجانبية (السهم ^ بجانب الساعة).\n"
             f"• الاختصار الافتراضي للترجمة: Ctrl + T\n\n"
             f"برمجة وتطوير: {DEV_NAME} • هاتف: {DEV_PHONE}"
         )

@@ -31,7 +31,7 @@ DEFAULT_CONFIG = {
     "auto_copy_translation": True,
     "show_overlay_image": True,
     "play_sound": True,
-    "show_launcher_on_startup": True,
+    "show_launcher_on_startup": False,
     "auto_start": True,
     "translation_mode": "auto",  # auto (Lens with Offline Fallback), offline (Offline Only), online (Lens Only)
     "theme": "dark",

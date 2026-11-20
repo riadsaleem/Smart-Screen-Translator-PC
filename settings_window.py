@@ -186,9 +186,19 @@ class SettingsWindow:
 
         self.setup_ui()
         self.win.protocol("WM_DELETE_WINDOW", self._close_window)
+        self.win.bind("<Unmap>", self._on_window_unmap)
         if tab:
             self.switch_tab(tab)
         self.win.focus_force()
+
+    def _on_window_unmap(self, event=None):
+        if event is not None and event.widget is not self.win:
+            return
+        try:
+            if self.win and self.win.winfo_exists() and self.win.state() == "iconic":
+                self.win.after(10, self._close_window)
+        except Exception:
+            pass
 
     def switch_theme(self, new_theme_name):
         self.current_theme = new_theme_name
@@ -725,7 +735,7 @@ class SettingsWindow:
         )
         chk2.pack(anchor=tk.E, pady=(2, 4))
 
-        self.show_on_startup_var = tk.BooleanVar(value=self.config.get("show_settings_on_startup", self.config.get("show_launcher_on_startup", True)))
+        self.show_on_startup_var = tk.BooleanVar(value=self.config.get("show_settings_on_startup", self.config.get("show_launcher_on_startup", False)))
         chk3 = ModernCheckbox(
             chk_box.body,
             text="فتح لوحة التحكم والإعدادات تلقائياً عند بدء التشغيل",
