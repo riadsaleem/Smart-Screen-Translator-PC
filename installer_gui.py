@@ -199,9 +199,27 @@ def get_startup_shortcut_path():
     return os.path.join(startup_dir, f"{DISPLAY_NAME}.lnk")
 
 
+def _remove_legacy_run_entry():
+    """Removes any legacy HKCU Run registry entry left by older builds."""
+    try:
+        import winreg
+        key = winreg.OpenKey(
+            winreg.HKEY_CURRENT_USER,
+            r"Software\Microsoft\Windows\CurrentVersion\Run",
+            0, winreg.KEY_SET_VALUE
+        )
+        try:
+            winreg.DeleteValue(key, "SmartScreenTranslatorPC")
+        finally:
+            winreg.CloseKey(key)
+    except Exception:
+        pass
+
+
 def set_windows_startup(target_exe, enable=True, icon_path=None, work_dir=None):
     """Registers or removes autostart via standard Windows Startup folder shortcut."""
     sync_auto_start_config(enable)
+    _remove_legacy_run_entry()
     try:
         lnk_path = get_startup_shortcut_path()
         if enable:

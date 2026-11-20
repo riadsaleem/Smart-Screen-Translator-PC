@@ -71,8 +71,24 @@ def is_startup_enabled():
     except Exception:
         return False
 
+def _remove_legacy_run_entry():
+    try:
+        key = winreg.OpenKey(
+            winreg.HKEY_CURRENT_USER,
+            r"Software\Microsoft\Windows\CurrentVersion\Run",
+            0, winreg.KEY_SET_VALUE
+        )
+        try:
+            winreg.DeleteValue(key, STARTUP_KEY_NAME)
+        finally:
+            winreg.CloseKey(key)
+    except Exception:
+        pass
+
+
 def set_startup(enable=True):
     lnk_path = _get_startup_lnk_path()
+    _remove_legacy_run_entry()
     try:
         if enable:
             os.makedirs(os.path.dirname(lnk_path), exist_ok=True)
@@ -100,17 +116,6 @@ def set_startup(enable=True):
         else:
             if os.path.exists(lnk_path):
                 os.remove(lnk_path)
-            # Also clean any legacy HKCU Run entry if user disables startup
-            try:
-                key = winreg.OpenKey(
-                    winreg.HKEY_CURRENT_USER,
-                    r"Software\Microsoft\Windows\CurrentVersion\Run",
-                    0, winreg.KEY_SET_VALUE
-                )
-                winreg.DeleteValue(key, STARTUP_KEY_NAME)
-                winreg.CloseKey(key)
-            except Exception:
-                pass
     except Exception as e:
         print("Failed to configure startup shortcut:", e)
 

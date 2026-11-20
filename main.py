@@ -32,7 +32,12 @@ def trim_process_memory():
     except Exception:
         pass
 
-def init_single_instance():
+def is_silent_launch():
+    """Returns True when launched silently on Windows boot (--startup / --silent / --minimized)."""
+    return any(flag in sys.argv for flag in ("--startup", "--silent", "--minimized"))
+
+
+def init_single_instance(silent_if_running=False):
     """Ensures only a single instance of the application runs at any time."""
     try:
         server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -58,13 +63,14 @@ def init_single_instance():
         return True
     except OSError:
         # Address in use: An instance is already running
-        try:
-            client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            client.connect(("127.0.0.1", SINGLE_INSTANCE_PORT))
-            client.sendall(b"SHOW")
-            client.close()
-        except Exception:
-            pass
+        if not silent_if_running:
+            try:
+                client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                client.connect(("127.0.0.1", SINGLE_INSTANCE_PORT))
+                client.sendall(b"SHOW")
+                client.close()
+            except Exception:
+                pass
         return False
 
 class SmartScreenTranslatorApp:
@@ -119,7 +125,7 @@ class SmartScreenTranslatorApp:
         self.register_hotkeys()
 
         # When launched via Windows startup (--startup), stay silently in the system tray to keep boot lightweight
-        is_startup_launch = "--startup" in sys.argv
+        is_startup_launch = is_silent_launch()
         if not is_startup_launch and self.config.get("show_settings_on_startup", self.config.get("show_launcher_on_startup", True)):
             self.root.after(350, lambda: self.open_settings("general"))
 
@@ -444,8 +450,8 @@ class SmartScreenTranslatorApp:
         self.root.mainloop()
 
 if __name__ == "__main__":
-    if not init_single_instance():
-        # Another instance is already running; signal sent to wake it up
+    if not init_single_instance(silent_if_running=is_silent_launch()):
+        # Another instance is already running
         sys.exit(0)
 
     try:
